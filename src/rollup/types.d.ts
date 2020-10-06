@@ -158,6 +158,8 @@ export type EmitChunk = (id: string, options?: { name?: string }) => string;
 export type EmitFile = (emittedFile: EmittedFile) => string;
 
 interface ModuleInfo {
+	ast: AcornNode | null;
+	code: string | null;
 	dynamicallyImportedIds: readonly string[];
 	dynamicImporters: readonly string[];
 	hasModuleSideEffects: boolean | 'no-treeshake';
@@ -343,6 +345,7 @@ export interface PluginHooks extends OutputPluginHooks {
 	buildStart: (this: PluginContext, options: NormalizedInputOptions) => Promise<void> | void;
 	load: LoadHook;
 	options: (this: MinimalPluginContext, options: InputOptions) => InputOptions | null | undefined;
+	// TODO Lukas parsedModule hook
 	resolveDynamicImport: ResolveDynamicImportHook;
 	resolveId: ResolveIdHook;
 	transform: TransformHook;
